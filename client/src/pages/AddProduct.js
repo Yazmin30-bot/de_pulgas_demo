@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
-
+import Auth from '../utils/auth';
 import { ADD_PRODUCT } from '../utils/mutations';
 
 import { QUERY_CATEGORIES } from '../utils/queries';
@@ -27,7 +27,7 @@ function AddProduct(props) {
                 category: formState.category,
             },
         });
-
+        Auth.addProduct();
     };
 
 
@@ -113,7 +113,7 @@ function AddProduct(props) {
                     <br></br>
                     <br></br>
                     <div>
-                        <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit">Sign Up</button>
+                        <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit">Add</button>
                     </div>
                 </form>
             </div>
