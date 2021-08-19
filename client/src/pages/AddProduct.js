@@ -4,12 +4,15 @@ import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_PRODUCT } from '../utils/mutations';
+import Axios from 'axios';
 
 import { QUERY_CATEGORIES } from '../utils/queries';
 function AddProduct(props) {
-    const [formState, setFormState] = useState({ name: '', description: '', quantity: 0, price: 0.00, image: "H-lamp.jpeg", category: "" });
+    const [imageSelected, setImageSelected] = useState({image: ""})
+    const [formState, setFormState] = useState({ name: '', description: '', quantity: 0, price: 0.00, category: "" });
     const [addProduct] = useMutation(ADD_PRODUCT);
     const { loading, error, data } = useQuery(QUERY_CATEGORIES)
+
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
     
@@ -23,7 +26,7 @@ function AddProduct(props) {
                 description: formState.description,
                 quantity: formState.quantity,
                 price: formState.price,
-                image: formState.image,
+                image: imageSelected.image,
                 category: formState.category,
             },
         });
@@ -36,9 +39,27 @@ function AddProduct(props) {
         data.append("file")
     } */
 
+    const uploadImage = () => {
+        const formData = new FormData()
+        formData.append("file", imageSelected)
+        /** formData.append("upload_preset",<Upload presets Name>) */
+        formData.append("upload_preset","qyk1qieu")
+        const config = {
+            headers: { "content-type": "application/x-www-form-urlencoded" },
+        };
+        /*https//api.cloudinary.com/v1_1/<CloudName>/image/upload*/ 
+        Axios.defaults.baseURL = 'https//api.cloudinary.com';
+        Axios.post("/v1_1/dquhmekvj/image/upload",formData,config).then((response)=>
+        console.log(response))
+
+    }
     const handleChange = (event) => {
         const { name, value } = event.target;
-       
+
+        if(name==="image"){
+            setImageSelected(event.target.files[0]);
+        } 
+        
         setFormState({
             ...formState,
             [name]: value,
@@ -113,7 +134,7 @@ function AddProduct(props) {
                     <br></br>
                     <br></br>
                     <div>
-                        <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit">Add</button>
+                        <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit" onClick= {uploadImage}>Add</button>
                     </div>
                 </form>
             </div>
