@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_PRODUCT } from '../utils/mutations';
 import Axios from 'axios';
-
+import {Image} from 'cloudinary-react';
 import { QUERY_CATEGORIES } from '../utils/queries';
 function AddProduct(props) {
     const [imageSelected, setImageSelected] = useState({image: ""})
@@ -44,12 +44,18 @@ function AddProduct(props) {
         formData.append("file", imageSelected)
         /** formData.append("upload_preset",<Upload presets Name>) */
         formData.append("upload_preset","qyk1qieu")
-       /*  const config = {
-            headers: { "content-type": "application/x-www-form-urlencoded" },
-        }; */
+        const config = {
+            headers:{
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
+                'Accept': 'application/x-www-form-urlencoded',
+                'Content-Type':'application/x-www-form-urlencoded'
+               },
+        };
         /*https//api.cloudinary.com/v1_1/<CloudName>/image/upload*/ 
         /* Axios.defaults.baseURL = 'https//api.cloudinary.com'; */
-        Axios.post("https//api.cloudinary.com/v1_1/dquhmekvj/image/upload",formData).then((response)=>
+        Axios.post("https//api.cloudinary.com/v1_1/dquhmekvj/image/upload",formData,config).then((response)=>
         console.log(response))
 
     }
@@ -135,6 +141,10 @@ function AddProduct(props) {
                     <br></br>
                     <div>
                         <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit" onClick= {uploadImage}>Add</button>
+                        <Image
+                        cloudName = "dquhmekvj"
+                        publicId ="https://res.cloudinary.com/dquhmekvj/image/upload/v1629252398/sample.jpg"
+                        />
                     </div>
                 </form>
             </div>
