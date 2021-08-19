@@ -34,7 +34,7 @@ function AddProduct(props) {
     };
 
     let url = "";
-    const uploadImage = async () => {
+    const uploadImage = async (event) => {
         const formData = new FormData()
         formData.append("file", imageSelected)
         /** formData.append("upload_preset",<Upload presets Name>) */
@@ -50,12 +50,12 @@ function AddProduct(props) {
                 image: url
             })
             console.log(seturlCloud);
-          
 
-         /*    setFormState({
-                ...formState,
-                image: url,
-            }); */
+
+            /*    setFormState({
+                   ...formState,
+                   image: url,
+               }); */
         })
 
 
@@ -76,7 +76,7 @@ function AddProduct(props) {
             [name]: value,
         });
 
-    
+
 
     };
 
@@ -84,9 +84,19 @@ function AddProduct(props) {
         <div className="container">
             <Link to="/myProducts">← Go your products</Link>
 
+            <div>
+                <h2>Add New Product</h2>
+                <button className="btn waves-effect waves-light #ffb300 amber darken-1" onClick={uploadImage}>Upload Photo</button>
+            </div>
             <div className="input-field">
                 <form onSubmit={handleFormSubmit} >
-                    <h2>Add New Product</h2>
+                    <label htmlFor="image"></label>
+                    <input
+                        name="image"
+                        type="file"
+                        id="image"
+                        onChange={handleChange}
+                    />
                     <label htmlFor="name"></label>
                     <input
                         placeholder="Name"
@@ -138,21 +148,15 @@ function AddProduct(props) {
                     </select>
 
 
-                    <label htmlFor="image"></label>
-                    <input
-                        name="image"
-                        type="file"
-                        id="image"
-                        onChange={handleChange}
-                    />
-                    
+
+
                     <br></br>
                     <br></br>
                     <div>
                         <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit" >Add</button>
                     </div>
                 </form>
-                <button className="btn waves-effect waves-light #ffb300 amber darken-1" onClick={uploadImage}>Upload</button>
+
             </div>
         </div>
     );
