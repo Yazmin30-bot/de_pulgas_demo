@@ -5,11 +5,11 @@ import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_PRODUCT } from '../utils/mutations';
 import Axios from 'axios';
-import {Image} from 'cloudinary-react';
+
 import { QUERY_CATEGORIES } from '../utils/queries';
 function AddProduct(props) {
     const [imageSelected, setImageSelected] = useState({image: ""})
-    const [formState, setFormState] = useState({ name: '', description: '', quantity: 0, price: 0.00, category: "" });
+    const [formState, setFormState] = useState({ name: '', description: '', quantity: 0, price: 0.00, image: "",category: "" });
     const [addProduct] = useMutation(ADD_PRODUCT);
     const { loading, error, data } = useQuery(QUERY_CATEGORIES)
 
@@ -26,7 +26,7 @@ function AddProduct(props) {
                 description: formState.description,
                 quantity: formState.quantity,
                 price: formState.price,
-                image: imageSelected.image,
+                image: formState.image,
                 category: formState.category,
             },
         });
@@ -38,26 +38,22 @@ function AddProduct(props) {
         const data = newFormData()
         data.append("file")
     } */
-
+    let  url ="";
     const uploadImage = () => {
         const formData = new FormData()
         formData.append("file", imageSelected)
         /** formData.append("upload_preset",<Upload presets Name>) */
         formData.append("upload_preset","qyk1qieu")
-        const config = {
-            headers:{
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
-                'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
-                'Accept': 'application/x-www-form-urlencoded',
-                'Content-Type':'application/x-www-form-urlencoded'
-               },
-        };
+        /*  */
         /*https//api.cloudinary.com/v1_1/<CloudName>/image/upload*/ 
-        /* Axios.defaults.baseURL = 'https//api.cloudinary.com'; */
-        Axios.post("https//api.cloudinary.com/v1_1/dquhmekvj/image/upload",formData,config).then((response)=>
-        console.log(response))
+        Axios.post("https://api.cloudinary.com/v1_1/dquhmekvj/image/upload",formData).then((response)=>{
+            console.log(response)
+           url = response.data.url 
+            console.log(url)
+        })
+        
 
+        
     }
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -65,13 +61,15 @@ function AddProduct(props) {
         if(name==="image"){
             setImageSelected(event.target.files[0]);
         } 
+            setFormState({
+                ...formState,
+                [name]: value,
+            });
         
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
+        
+        
     };
-
+  
     return (
         <div className="container">
             <Link to="/myProducts">← Go your products</Link>
@@ -141,10 +139,6 @@ function AddProduct(props) {
                     <br></br>
                     <div>
                         <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit" onClick= {uploadImage}>Add</button>
-                        <Image
-                        cloudName = "dquhmekvj"
-                        publicId ="https://res.cloudinary.com/dquhmekvj/image/upload/v1629252398/sample.jpg"
-                        />
                     </div>
                 </form>
             </div>
