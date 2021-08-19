@@ -40,7 +40,7 @@ db.once('open', async () => {
       name: 'Women Denim Shirt',
       description:
         'Classic Denim shirt, Size: Unisize',
-      image: 'https://res.cloudinary.com/dquhmekvj/image/upload/c_scale,h_800/v1629341739/soblwnnmwupeu1zvtt65.jpg',
+      image: 'https://res.cloudinary.com/dquhmekvj/image/upload/c_scale,h_800/v1629389871/cnp7xny6av7ehnrrumvi.jpg',
       category: categories[0]._id,
       price: '11.00',
       quantity: '12'
