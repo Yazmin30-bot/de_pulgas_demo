@@ -44,12 +44,12 @@ function AddProduct(props) {
         formData.append("file", imageSelected)
         /** formData.append("upload_preset",<Upload presets Name>) */
         formData.append("upload_preset","qyk1qieu")
-        const config = {
+       /*  const config = {
             headers: { "content-type": "application/x-www-form-urlencoded" },
-        };
+        }; */
         /*https//api.cloudinary.com/v1_1/<CloudName>/image/upload*/ 
-        Axios.defaults.baseURL = 'https//api.cloudinary.com';
-        Axios.post("/v1_1/dquhmekvj/image/upload",formData,config).then((response)=>
+        /* Axios.defaults.baseURL = 'https//api.cloudinary.com'; */
+        Axios.post("https//api.cloudinary.com/v1_1/dquhmekvj/image/upload",formData).then((response)=>
         console.log(response))
 
     }
