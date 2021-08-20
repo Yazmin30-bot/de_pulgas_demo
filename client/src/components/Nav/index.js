@@ -13,10 +13,9 @@ function Nav() {
               Order History
             </Link>
           </li>
-
           <li className="mx-1">
-            <Link to="/myProducts">
-              My products
+            <Link to="/myproducts">
+              My Products
             </Link>
           </li>
           <li className="mx-1">

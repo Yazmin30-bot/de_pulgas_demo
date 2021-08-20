@@ -5,8 +5,8 @@ import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_PRODUCT } from '../utils/mutations';
 import Axios from 'axios';
-
 import { QUERY_CATEGORIES } from '../utils/queries';
+
 function AddProduct(props) {
     const [imageSelected, setImageSelected] = useState()
     const [urlCloud, seturlCloud] = useState({ image: "" })
@@ -33,6 +33,7 @@ function AddProduct(props) {
         Auth.addProduct();
     };
 
+
     let url = "";
     const uploadImage = async (event) => {
         const formData = new FormData()
@@ -53,8 +54,8 @@ function AddProduct(props) {
 
 
             /*    setFormState({
-                   ...formState,
-                   image: url,
+                ...formState,
+                image: url,
                }); */
         })
 
@@ -75,11 +76,9 @@ function AddProduct(props) {
             ...formState,
             [name]: value,
         });
-
-
-
     };
 
+    
     return (
         <div className="container">
             <Link to="/myProducts">← Go your products</Link>
@@ -153,7 +152,7 @@ function AddProduct(props) {
                     <br></br>
                     <br></br>
                     <div>
-                        <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit" >Add</button>
+                        <button className="btn waves-effect waves-light #ffb300 amber darken-1" type="submit" >Add product</button>
                     </div>
                 </form>
 

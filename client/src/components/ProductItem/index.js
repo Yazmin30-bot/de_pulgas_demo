@@ -4,7 +4,8 @@ import { pluralize } from "../../utils/helpers"
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
-import {Image} from 'cloudinary-react';
+import { Image } from 'cloudinary-react';
+
 function ProductItem(item) {
   const [state, dispatch] = useStoreContext();
 
@@ -47,9 +48,9 @@ function ProductItem(item) {
           src={`/images/${image}`}
         /> */}
         <Image
-          style={{height:150} }
+          style={{ height: 150 }}
           cloudName="dquhmekvj"
-          publicId={image}
+          publicId={item.image}
         />
         <p style={{ color: "black" }}>{name}</p>
       </Link>
@@ -57,7 +58,12 @@ function ProductItem(item) {
         <div>{quantity} {pluralize("item", quantity)} in stock</div>
         <span>${price}</span>
       </div>
-      <button className="waves-effect waves-light btn-small container #ffb300 amber darken-1" onClick={addToCart}>Add to cart</button>
+      {(item.quantity>0) ? (
+         <button className="waves-effect waves-light btn-small container #ffb300 amber darken-1" onClick={addToCart}>Add to cart</button>
+      ):(
+        <button className="waves-effect waves-light btn-small container #ffb300 amber darken-1" disabled={true}>Out of stock</button>
+      )}
+    
     </div>
   );
 }

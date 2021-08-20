@@ -34,19 +34,13 @@ class AuthService {
     window.location.assign('/');
   }
 
-  addProduct() {
-    
-    window.location.assign('/myProducts');
-  }
-
   removeMyProduct(){
     window.location.assign('/myProducts');
   }
-
   removeProduct(){
     window.location.assign('/myProducts');
   }
-
+  
   logout() {
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token');
@@ -54,7 +48,10 @@ class AuthService {
     window.location.assign('/');
   }
 
-  
+  addProduct() {
+    
+    window.location.assign('/myProducts');
+  }
 }
 
 export default new AuthService();

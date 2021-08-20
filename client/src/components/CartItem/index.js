@@ -40,14 +40,14 @@ const CartItem = ({ item }) => {
     <div className="flex-row">
       <div>
         {/* <img
-          src={`/images/${item.image}`}
-          alt=""
-        /> */}
+            src={`/images/${currentProduct.image}`}
+            alt={currentProduct.name}
+          /> */}
         <Image
-                          style={{ height: 10 }}
-                          cloudName="dquhmekvj"
-                          publicId={item.image}
-                        />
+          style={{ height: 80 }}
+          cloudName="dquhmekvj"
+          publicId={item.image}
+        />
       </div>
       <div>
         <div>{item.name}, ${item.price}</div>

@@ -75,22 +75,12 @@ const resolvers = {
           const line_items = [];
     
           const { products } = await order.populate('products').execPopulate();
-          console.log(products);
-
-          products.forEach(element => {
-            const decrement = Math.abs(parseInt(quantity)) * -1;
-            console.log(decrement);
-    
-           Product.findByIdAndUpdate(element._id, { $inc: { quantity: decrement } }, { new: true });
-            
-          });
     
           for (let i = 0; i < products.length; i++) {
             const product = await stripe.products.create({
               name: products[i].name,
-              id: products[i]._id,
               description: products[i].description,
-              images: products[i].image
+              images: [`${url}/images/${products[i].image}`]
             });
     
             const price = await stripe.prices.create({
@@ -112,8 +102,6 @@ const resolvers = {
             success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${url}/`
           });
-
-          
     
           return { session: session.id };
         }
@@ -205,6 +193,13 @@ const resolvers = {
     
           return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
         },
+
+        updateQuantityProduct: async (parent, { _id, quantity }) => {
+          const decrement = Math.abs(quantity) -1;
+    
+          return await Product.findByIdAndUpdate(_id, {quantity: decrement}, { new: true });
+        },
+        
         login: async (parent, { email, password }) => {
           const user = await User.findOne({ email });
     

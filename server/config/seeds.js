@@ -1,22 +1,19 @@
 const db = require('./connection');
 const { User, Product, Category } = require('../models');
-
 db.once('open', async () => {
   await Category.deleteMany();
-
   const categories = await Category.insertMany([
     { name: 'Tops' },
     { name: 'Bottoms' },
     { name: 'Shoes' },
     { name: 'Books' },
     { name: 'HomeDecor' },
-    { name: 'Electronics'}
+    { name: 'Electronics' },
+    { name: 'Other' },
+
   ]);
-
   console.log('categories seeded');
-
   await Product.deleteMany();
-
   const products = await Product.insertMany([
     {
       name: 'Mens Denim Shirt',
@@ -223,13 +220,9 @@ db.once('open', async () => {
       price: '159.99',
       quantity: '7'
     },
-    
   ]);
-
   console.log('products seeded');
-
   await User.deleteMany();
-
   await User.create({
     firstName: 'Yaz',
     lastName: 'Tinoco',
@@ -246,18 +239,12 @@ db.once('open', async () => {
       }
     ]
   });
-
   await User.create({
     firstName: 'Alsy',
     lastName: 'Google',
     email: 'alsy@testmail.com',
     password: 'password12345'
   });
-
-
-  
-
   console.log('users seeded');
-
   process.exit();
 });
